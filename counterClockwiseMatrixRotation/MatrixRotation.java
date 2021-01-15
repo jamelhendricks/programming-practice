@@ -1,4 +1,5 @@
 import java.lang.StringBuilder;
+import java.util.Arrays;
 
 
 public class MatrixRotation {
@@ -42,7 +43,63 @@ public class MatrixRotation {
 	System.out.println(prettyArray.toString());
     }
 
+
+    public static int[][] rotateArray(int[][] array){
+        int length = array[0].length; 
+        int[][] rotated = new int[length][length];
+
+        int[] oneByForm = new int[length * length];
+        int counter = 0;
+        for (int i = 0; i < length; i++){
+	    for (int h = 0; h < length; h++){
+                oneByForm[counter] = array[i][h]; 
+		counter++;
+            }
+        }
+ 
+	 counter = 0;
+         for (int i = 0; i < length; i++){
+	     for (int h = length - 1; h >= 0; h--){
+                 
+ 	         rotated[h][i] = oneByForm[counter];
+		 counter++;
+             }
+         }
+
+	 return rotated;
+    }
+ 
+    public static void printBySide(int[][] arrA, int[][] arrB){
+	int length = arrA[0].length;
+
+	StringBuilder row = new StringBuilder();
+	row.append("----------------------------------------\n");        
+	row.append("----------------------------------------\n\n");        
+        for (int i = 0; i < length; i++){
+            for (int h = 0; h < length; h++){
+   	        row.append("[ " + arrA[i][h] + " ] "); 
+            }
+            
+	    row.append("    |    ");
+
+            for (int h = 0; h < length; h++){
+   	        row.append("[ " + arrB[i][h] + " ] "); 
+            }
+            row.append("\n");
+        }
+        
+        System.out.println(row.toString());
+    }
+
+    public static void naiveMethod(){
+
+	printBySide(oneBy, rotateArray(oneBy));
+	printBySide(twoBy, rotateArray(twoBy));
+	printBySide(threeBy, rotateArray(threeBy));
+	        
+    }
+
     public static void main(String[] args){
-	prettyPrintArray(twoBy);
+	naiveMethod();
     }
 }
