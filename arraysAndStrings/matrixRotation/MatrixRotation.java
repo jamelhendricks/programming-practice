@@ -94,6 +94,35 @@ public class MatrixRotation {
 
 	    return rotated;
     }
+
+    // optimal solution (constant space, in place)
+    // CLOCKWISE !!!!!
+    public static int[][] optimalSolution(int[][] array){
+
+        int N = array[0].length;
+
+        // swap corresponding opposite columns of a transposed array to do a clockwise rotation
+
+        // transpose the array
+        for (int i = 0; i < N; i++){
+            for (int j = i; j < N; j++){
+                int temp = array[i][j];
+                array[i][j] = array[j][i];
+                array[j][i] = temp;
+            }
+        }
+
+        // swap the opposite rows, except the middle
+        for (int i = 0; i < N; i++){
+            for (int j = 0; j < (N/2); j++){
+                int temp = array[i][j];
+                array[i][j] = array[i][N-1-j];
+                array[i][N-1-j] = temp;
+            }
+        }
+
+        return array;
+    }
     
     // helper method to pretty print two 2-d arrays side by side
     public static void printBySide(int[][] arrA, int[][] arrB){
@@ -128,7 +157,19 @@ public class MatrixRotation {
         printBySide(fourBy, rotateArray(fourBy)); 
     }
 
+    public static void optimalMethod(){
+        prettyPrintArray(oneBy);
+        prettyPrintArray(optimalSolution(oneBy));
+        prettyPrintArray(twoBy);
+        prettyPrintArray(optimalSolution(twoBy));
+        prettyPrintArray(threeBy);
+        prettyPrintArray(optimalSolution(threeBy));
+        prettyPrintArray(fourBy);
+        prettyPrintArray(optimalSolution(fourBy));
+    }
+
     public static void main(String[] args){
-	    naiveMethod();
+        // naiveMethod();
+        optimalMethod();
     }
 }
